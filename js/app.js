@@ -97,18 +97,7 @@ const hadi = new employee(
   "imgs/hadi.png"
 );
 
-ghazi.calculateSalary();
-ghazi.render();
-lana.calculateSalary();
-lana.render();
-tamara.calculateSalary();
-tamara.render();
-safi.calculateSalary();
-safi.render();
-omar.calculateSalary();
-omar.render();
-rana.calculateSalary();
-rana.render();
-hadi.calculateSalary();
-hadi.render();
-console.log(allEmployees);
+allEmployees.forEach((emp) => {
+  emp.calculateSalary();
+  emp.render();
+});
