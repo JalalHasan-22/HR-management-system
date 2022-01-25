@@ -1,9 +1,15 @@
 const main = document.querySelector("#main");
 const allEmployees = [];
-const infoBox = document.getElementById("emp-info");
+const cardsContainer = document.getElementById("emps-cards");
+const btnAddNew = document.querySelector(".add-emp");
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const btnCloseModal = document.querySelector(".close-modal-btn");
+const form = document.querySelector(".modal-form");
+const formNameInput = document.getElementById("fullName");
+const formNameImg = document.getElementById("img");
 
-function employee(empID, fName, department, level, imgURL) {
-  this.id = empID;
+function Employee(fName, department, level, imgURL) {
   this.fullName = fName;
   this.department = department;
   this.level = level;
@@ -12,7 +18,7 @@ function employee(empID, fName, department, level, imgURL) {
 }
 
 // Calculating the salary
-employee.prototype.calculateSalary = function () {
+Employee.prototype.calculateSalary = function () {
   let min, max;
   if (this.level === "Senior") {
     min = 1500;
@@ -32,72 +38,92 @@ employee.prototype.calculateSalary = function () {
 };
 
 // Calculate net salary
-employee.prototype.netSalary = function () {
+Employee.prototype.netSalary = function () {
   if (this.salary)
     return (this.netSalary =
       this.salary - Math.floor(this.salary * (7.5 / 100)));
   return;
 };
 
+// generate random ID
+Employee.prototype.generateID = function () {
+  this.id = Math.floor(1000 + Math.random() * 9000);
+};
+
 // Rendering Employee name and salary
-employee.prototype.render = function () {
-  const markup = `<h3 class="emp-name">${this.fullName}</h3>
-  <p class="emp-salary">${this.salary}$</p>`;
-  infoBox.insertAdjacentHTML("beforeend", markup);
+Employee.prototype.render = function () {
+  const markup = `          <div class="card">
+  <img src="assets/imgs/${this.img}.svg" alt="Avatar" />
+  <div class="emp-info">
+    <h3 class="emp-name">${this.fullName}</h3>
+    <p class="id"><span>ID:</span>${this.id}</p>
+    <p class="id"><span>Salary:</span>${this.salary} $</p>
+    <p class="id"><span>Dep:</span>${this.department}</p>
+    <p class="id"><span>level:</span>${this.level}</p>
+  </div>
+</div>`;
+  cardsContainer.insertAdjacentHTML("beforeend", markup);
 };
 
 // Creating objects
-const ghazi = new employee(
-  1000,
-  "Ghazi Samer",
-  "Administration",
-  "Senior",
-  "imgs/ghazi.png"
-);
-const lana = new employee(
-  1001,
-  "Lana Ali",
-  "Finance",
-  "Senior",
-  "imgs/lana.png"
-);
-const tamara = new employee(
-  1002,
-  "Tamara Ayoub",
-  "Marketing",
-  "Senior",
-  "imgs/tamara.png"
-);
-const safi = new employee(
-  1003,
+const ghazi = new Employee("Ghazi Samer", "Administration", "Senior", "user01");
+const lana = new Employee("Lana Ali", "Finance", "Senior", "user01");
+const tamara = new Employee("Tamara Ayoub", "Marketing", "Senior", "user01");
+const safi = new Employee(
   "Safi Walid",
   "Administration",
   "Mid-Senior",
-  "imgs/safi.png"
+  "user01"
 );
-const omar = new employee(
-  1004,
-  "Omar Zaid",
-  "Development",
-  "Senior",
-  "imgs/omar.png"
-);
-const rana = new employee(
-  1005,
-  "Rana Saleh",
-  "Development",
-  "Junior",
-  "imgs/rana.png"
-);
-const hadi = new employee(
-  1006,
-  "Hadi Ahmad",
-  "Finance",
-  "Mid-Senior",
-  "imgs/hadi.png"
-);
+const omar = new Employee("Omar Zaid", "Development", "Senior", "user01");
+const rana = new Employee("Rana Saleh", "Development", "Junior", "user01");
+const hadi = new Employee("Hadi Ahmad", "Finance", "Mid-Senior", "user01");
 
+// Revelaling the Modal
+const showModal = function () {
+  modal.classList.toggle("hidden");
+  overlay.classList.toggle("hidden");
+  document.body.classList.toggle("no-scroll");
+  clearFields();
+};
+
+//Clearing the form fields
+const clearFields = () => {
+  formNameInput.value = "";
+  formNameImg.value = "";
+};
+// Close Modal
+const closeModale = () => {
+  overlay.classList.add("hidden");
+  modal.classList.add("hidden");
+  document.body.classList.remove("no-scroll");
+};
+btnAddNew.addEventListener("click", showModal);
+btnCloseModal.addEventListener("click", showModal);
+overlay.addEventListener("click", showModal);
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") {
+    closeModale();
+  }
+});
+
+// Rendering Employees from the Array
 allEmployees.forEach((emp) => {
   emp.calculateSalary();
+  emp.generateID();
   emp.render();
+});
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const fullName = e.target.fullName.value;
+  const department = e.target.department.value;
+  const level = e.target.level.value;
+  const img = e.target.img.value;
+  clearFields();
+  closeModale();
+  const newEmp = new Employee(fullName, department, level, img);
+  newEmp.calculateSalary();
+  newEmp.generateID();
+  newEmp.render();
 });
