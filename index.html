@@ -33,12 +33,31 @@
 
     <main id="main" class="main">
       <div class="container main-container">
-        <h1 class="main-title">
-          HR <span class="highlight">Management</span> System
-        </h1>
-        <section id="emp-info" class="emp-info">
-          <!-- <h3 class="emp-name">Ghazi Samer</h3>
-          <p class="emp-salary">1500$</p> -->
+        <section id="top-part">
+          <h1 class="main-title">
+            HR <span class="highlight">Management</span> System
+          </h1>
+          <a href="#" class="add-emp">Add new Employee</a>
+        </section>
+        <!-- <section id="emp-info" class="emp-info">
+          <h3 class="emp-name">Ghazi Samer</h3>
+          <p class="emp-salary">1500$</p>
+        </section> -->
+        <section class="emps-cards" id="emps-cards">
+          <!-- <div class="card">
+            <img src="assets/imgs/user01.svg" alt="Avatar" />
+            <div class="emp-info">
+              <h3 class="emp-name">Name</h3>
+              <br />
+              <p class="id">ID</p>
+              <br />
+              <p class="id">Salary</p>
+              <br />
+              <p class="id">Department</p>
+              <br />
+              <p class="id">Level</p>
+            </div>
+          </div> -->
         </section>
       </div>
     </main>
@@ -61,5 +80,35 @@
         </ul>
       </div>
     </footer>
+    <div class="modal hidden">
+      <button class="close-modal-btn">&times;</button>
+      <h2 class="modal-header">Add a new employee</h2>
+      <form class="modal-form">
+        <label>Full Name</label>
+        <input type="text" required id="fullName" placeholder="ex: John Doe" />
+
+        <label for="department">Department</label>
+        <select name="department" id="department">
+          <option value="Administration">Administration</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Development">Development</option>
+          <option value="Finance">Finance</option>
+        </select>
+        <label for="level">Level</label>
+        <select name="level" id="level">
+          <option value="Junior">Junior</option>
+          <option value="Mid-Senior">Mid-Senior</option>
+          <option value="Senior">Senior</option>
+        </select>
+        <label>Image URL</label>
+        <input
+          type="text"
+          id="img"
+          placeholder="Please choose 'user01' for testing"
+        />
+        <input type="submit" value="Add" />
+      </form>
+    </div>
+    <div class="overlay hidden"></div>
   </body>
 </html>
