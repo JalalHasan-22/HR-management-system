@@ -323,8 +323,38 @@ ul {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.7);
 }
 .no-scroll {
   overflow-y: hidden;
+}
+
+/* Accounting Table */
+
+.employees-info-table {
+  width: 100%;
+  border: 1px solid var(--my-white);
+  font-size: 2rem;
+  border-collapse: collapse;
+  margin-top: 5rem;
+  text-align: center;
+}
+
+.employees-info-table td,
+.employees-info-table th {
+  border: 1px solid var(--my-white);
+  height: 100px;
+}
+
+.employees-info-table td {
+  font-size: 1.4rem;
+}
+
+/* Warning Message  */
+
+.warning {
+  position: absolute;
+  top: 50%;
+  color: var(--crimson-color);
+  font-size: 3rem;
 }
