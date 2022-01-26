@@ -1,5 +1,4 @@
 const main = document.querySelector("#main");
-const allEmployees = [];
 const cardsContainer = document.getElementById("emps-cards");
 const btnAddNew = document.querySelector(".add-emp");
 const modal = document.querySelector(".modal");
@@ -14,8 +13,10 @@ function Employee(fName, department, level, imgURL) {
   this.department = department;
   this.level = level;
   this.img = imgURL;
-  allEmployees.push(this);
+  Employee.allEmployees.push(this);
 }
+
+Employee.allEmployees = [];
 
 // Calculating the salary
 Employee.prototype.calculateSalary = function () {
@@ -107,14 +108,9 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
-// Rendering Employees from the Array
-allEmployees.forEach((emp) => {
-  emp.calculateSalary();
-  emp.generateID();
-  emp.render();
-});
+// Handling Submit
 
-form.addEventListener("submit", function (e) {
+const handleSubmit = (e) => {
   e.preventDefault();
   const fullName = e.target.fullName.value;
   const department = e.target.department.value;
@@ -125,5 +121,45 @@ form.addEventListener("submit", function (e) {
   const newEmp = new Employee(fullName, department, level, img);
   newEmp.calculateSalary();
   newEmp.generateID();
+  saveToLocalStorage(Employee.allEmployees);
+  getLoacalStorageData();
+
   newEmp.render();
-});
+};
+
+// Rendering Employees from the Array
+const renderAll = () => {
+  Employee.allEmployees.forEach((emp) => {
+    emp.calculateSalary();
+    emp.generateID();
+    emp.render();
+  });
+};
+form.addEventListener("submit", handleSubmit);
+
+// Save to Local Storage
+
+const saveToLocalStorage = (data) => {
+  const datastr = JSON.stringify(data);
+  localStorage.setItem((key = "allEmps"), (value = datastr));
+};
+
+// Get Data from LocalStorage
+
+const getLoacalStorageData = () => {
+  const data = JSON.parse(localStorage.getItem("allEmps"));
+  if (!data) return;
+  Employee.allEmployees = data.map((entry) => {
+    return new Employee(
+      entry.fullName,
+      entry.department,
+      entry.level,
+      entry.img
+    );
+    Employee.allEmployees.forEach((entry) => {
+      entry.renderAll();
+    });
+  });
+};
+getLoacalStorageData();
+renderAll();
