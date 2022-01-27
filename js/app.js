@@ -54,7 +54,7 @@ Employee.prototype.generateID = function () {
 // Rendering Employee name and salary
 Employee.prototype.render = function () {
   const markup = `          <div class="card">
-  <img src="assets/imgs/${this.img}.svg" alt="Avatar" />
+  <img src="assets/imgs/${this.fullName.split(" ")[0]}.jpg" alt="Avatar" />
   <div class="emp-info">
     <h3 class="emp-name">${this.fullName}</h3>
     <p class="id"><span>ID:</span>${this.id}</p>
