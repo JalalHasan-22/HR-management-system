@@ -55,17 +55,17 @@ const renderTable = function () {
   const data = getDataInsights(getData());
   let markup;
   if (!data) markup = `<h3 class = "warning"> No Data to be displayed</h3>`;
-
-  const total = {
-    totalNoOfEmployees: 0,
-    allDepsSalaries: 0,
-    avgAllSalaries: 0,
-  };
-  const formatter = new Intl.NumberFormat("us-EN", {
-    style: "currency",
-    currency: "USD",
-  });
-  markup = `<table class="employees-info-table">
+  else {
+    const total = {
+      totalNoOfEmployees: 0,
+      allDepsSalaries: 0,
+      avgAllSalaries: 0,
+    };
+    const formatter = new Intl.NumberFormat("us-EN", {
+      style: "currency",
+      currency: "USD",
+    });
+    markup = `<table class="employees-info-table">
   <thead>
     <tr>
       <th>Department Name</th>
@@ -98,7 +98,7 @@ const renderTable = function () {
     </tr>
     </tfoot>
   </table>`;
-
+  }
   mainContainer.insertAdjacentHTML("beforeend", markup);
 };
 
